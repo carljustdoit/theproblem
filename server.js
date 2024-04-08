@@ -18,7 +18,7 @@ const db = new sqlite3.Database('responses.db', (err) => {
         console.log('Connected to the database');
 
         // Create 'responses' table if it doesn't exist
-        db.run('CREATE TABLE IF NOT EXISTS responses (id INTEGER PRIMARY KEY AUTOINCREMENT, text TEXT)', (createErr) => {
+        db.run('CREATE TABLE IF NOT EXISTS responses (id INTEGER PRIMARY KEY AUTOINCREMENT, text TEXT, timestamp TEXT)', (createErr) => {
             if (createErr) {
                 console.error('Error creating table:', createErr.message);
             } else {
@@ -33,20 +33,27 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/index.html'));
 });
 
+// Modify the 'submit' route to include timestamp
 app.post('/submit', (req, res) => {
     const { response } = req.body;
-    db.run('INSERT INTO responses (text) VALUES (?)', [response], function(err) {
+    const timestamp = new Date().toISOString(); // Get current timestamp
+    db.run('INSERT INTO responses (text, timestamp) VALUES (?, ?)', [response, timestamp], function(err) {
         if (err) {
             console.error('Error inserting response:', err.message);
             res.status(500).send('Error submitting response');
         } else {
             console.log('Response submitted successfully');
-            res.redirect('/view');
+            res.redirect('/view.html');
         }
     });
 });
 
 app.get('/view', (req, res) => {
+    res.sendFile(path.join(__dirname, '/public/view.html'));
+});
+
+// Fetch data from the database when /data route is accessed
+app.get('/data', (req, res) => {
     db.all('SELECT * FROM responses', (err, rows) => {
         if (err) {
             console.error('Error fetching responses:', err.message);
@@ -56,6 +63,7 @@ app.get('/view', (req, res) => {
         }
     });
 });
+
 
 // Start the server
 app.listen(port, () => {
