@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tell Us Your Problem</title>
+    <title>Problems in Life</title>
     <style>
         /* Your CSS styles here */
         body {
@@ -74,13 +74,13 @@
 </head>
 <body>
     <div class="container">
-        <h1>Tell Us Your Problem Today</h1>
+        <h1>Tell us what frustrates you today?</h1>
         <form action="/submit" method="post">
-            <label for="problem">What is your problem today?</label>
-            <textarea id="problem" name="response" rows="6" cols="50" placeholder="Enter your problem here..."></textarea>
+            <label for="problem">It could be anything at work or at life. Pick one that you feel the most frustration. Describe it in details if you can. </label>
+            <textarea id="problem" name="response" rows="6" cols="50" placeholder="Example: I am frustrated that I could not find anyone to eat with last minute for my Sunday dinner. "></textarea>
             <button type="submit">Submit</button>
         </form>
-        <p>View submitted data <a href="/view">here</a>.</p>
+        <p>View all past submissions <a href="/view">here</a>.</p>
     </div>
 </body>
 </html>
