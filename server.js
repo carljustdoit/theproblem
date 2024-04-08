@@ -30,7 +30,7 @@ const db = new sqlite3.Database('responses.db', (err) => {
 
 // Define routes
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '/public/index.html'));
+    res.sendFile(path.join(__dirname, '/index.html'));
 });
 
 // Modify the 'submit' route to include timestamp
